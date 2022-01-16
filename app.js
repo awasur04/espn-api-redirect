@@ -54,3 +54,13 @@ function updateGame(index, game)
 	gameList[index] = createGameObect(game);
 }
 
+function createGameObect(game)
+{
+	//Create new team variables to update game list
+	const competiton = game.competitions[0];
+
+	let homeTeam = new Team(competiton.competitors[0].id, competiton.competitors[0].score);
+	let awayTeam = new Team(competiton.competitors[1].id, competiton.competitors[1].score);
+
+	return new Game(game.id, homeTeam, awayTeam, game.date, game.status.type.name);
+}
