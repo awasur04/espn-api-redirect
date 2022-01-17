@@ -1,2 +1,2 @@
 # espn-api-redirect
- Process ESPN public API and allow applications to retrieve game data
+ Process ESPN and FanDuel API and allow toastybets application to retrieve needed information
