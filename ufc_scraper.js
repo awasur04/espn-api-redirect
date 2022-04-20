@@ -1,24 +1,22 @@
 const cheerio = require('cheerio');
-const request = require('request');
-const { Fighter, Event, Match, ufcFightList } = require('./data');
+const fetch = require('node-fetch')
+const { Fighter, Event, Match } = require('./data');
 
 const ufcEventsRoot = "https://www.sherdog.com";
-const ufcEventList = "/organizations/Ultimate-Fighting-Championship-UFC-2";
+const ufcEventListExtension = "/organizations/Ultimate-Fighting-Championship-UFC-2";
 
-function updateEventList()
+let ufcEventList = require('./data')
+
+async function updateEventList()
 {
-	ufcFightList = [];
-	let requestReponse = loadSiteHTML(ufcEventsRoot + ufcEventList, function (error, html)
+	ufcEventList = [];
+	let requestResponseHTML = await loadSiteHTML(ufcEventsRoot + ufcEventListExtension)
+	let $ = cheerio.load(requestResponseHTML);
+	let upcomingTab = $("#upcoming_tab").find("*[itemprop = 'url']").each(async (i, element) => 
 	{
-		let $ = cheerio.load(html);
-		let upcomingId = $("#upcoming_tab").find("*[itemprop = 'url']").each((i, element) => 
-		{
-			let eventSiteExtension = $(element).attr('href');
-			let eventRequest = loadSiteHTML(ufcEventsRoot + eventSiteExtension, function (error, html)
-			{
-				updateEventDetails(html);
-			})
-		});
+		let eventSiteExtension = $(element).attr('href');
+		let eventRequestHTML = await loadSiteHTML(ufcEventsRoot + eventSiteExtension)
+		updateEventDetails(eventRequestHTML);
 	});
 }
 
@@ -26,36 +24,51 @@ function updateEventDetails(eventHTML)
 {
 	let $ = cheerio.load(eventHTML);
 
-	ufcFightList.push(
-		new Event(
-			eventName: $(".event_detail").find("h1").text(),
-			date: $(".event_detail").find("[itemprop=startDate]").text(),
-			matches[0] =
-			new Match(
-				matchID: 0,
-				fighter0: request(ufcEventsRoot + $(".fighter left_side").attr("href").find("[itemprop='url']"), getFighterDetails(error, html)),
-				fighter1: request(ufcEventsRoot + $(".fighter right_side").attr("href").find("[itemprop='url']"), getFighterDetails(error, html)),
-				weightClass: $(".weight_class").text()
-			)
+	ufcEventList[0] = new Event(
+		//EVENT NAME
+		$(".event_detail").find("h1").text(),
+
+		//EVENT DATE
+		new Date($(".event_detail .info > span:first").text()),
+
+		//MAIN EVENT
+		new Match(
+			//MATCH ID
+			0,
+
+			//FIGHTER 0
+			getFighterDetails(ufcEventsRoot + $(".fighter left_side").attr("href")),
+
+			//FIGHTER 1
+			getFighterDetails(ufcEventsRoot + $(".fighter right_side").attr("href")),
+
+			//WEIGHT CLASS
+			$(".weight_class").text()
 		)
 	)
+	let sortedList = ufcEventList.sort((a, b) => a.date - b.date);
+	console.log(sortedList);
 }
 
-function getFighterDetails(error, html)
+function getFighterDetails(fighterURLExtension)
 {
-
+	return { name: "Joe" }
 }
 
-let loadSiteHTML = function (siteExtension, callback)
+async function loadSiteHTML(siteExtension)
 {
-	let html = request(siteExtension, function (error, response, html)
+	let html = await fetch(siteExtension).then(function (response)
 	{
-		if (error && response.statusCode != 200)
+		if (response.status != 200)
 		{
-			console.log("Failed to load HTML from " + site + "\nError: " + error);
+			console.log("Failed to load HTML from " + site);
+			return "";
+		} else
+		{
+			return response.text();
 		}
-		callback(error, html);
 	});
+	return html;
 };
 
-updateEventList(html);
+updateEventList();

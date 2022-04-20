@@ -25,15 +25,15 @@ function Fighter(name, weight, height, age, record, odds)
 	this.odds = odds;
 }
 
-function Match(matchID, fighter1, fighter2, weightClass)
+function Match(matchID, fighter0, fighter1, weightClass)
 {
 	this.matchID = matchID;
+	this.fighter0 = fighter0;
 	this.fighter1 = fighter1;
-	this.fighter2 = fighter2;
 	this.weightClass = weightClass;
 }
 
-function Event(eventName, date, matches[])
+function Event(eventName, date, ...matches)
 {
 	this.eventName = eventName;
 	this.date = date;
@@ -41,7 +41,7 @@ function Event(eventName, date, matches[])
 }
 
 let nflGameList = [];
-let ufcFightList = [];
+let ufcEventList = [];
 
 
 
@@ -53,7 +53,7 @@ event1 =
 	matches = 
 	[
 		eventID = 0
-		fighter1 = 
+		fighter0 = 
 		{
 			name = "",
 			weight = "",
@@ -62,7 +62,7 @@ event1 =
 			record = "",
 			odds = ""
 		},
-		fighter2 = 
+		fighter1 = 
 		{
 			name = "",
 			weight = "",
@@ -88,5 +88,5 @@ module.exports =
 	Fighter,
 	Match,
 	Event,
-	ufcFightList
+	ufcEventList
 };
