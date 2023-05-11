@@ -1,6 +1,7 @@
 const https = require('https');
-const { Team, Game, gameList } = require('./data');
+const { Team, Game, nflGameList } = require('./data');
 
+const footballURL = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
 
 const request = https.request(footballURL, (response) => 
 {
@@ -29,7 +30,7 @@ function processGames(body)
 {
 	for (let game of body.events)
 	{
-		let index = gameList.findIndex(x => x.matchId == game.id);
+		let index = nflGameList.findIndex(x => x.matchId == game.id);
 
 		if (index == -1)
 		{
@@ -40,7 +41,7 @@ function processGames(body)
 			updateGame(index, game);
 		}
 	}
-	console.log(gameList);
+	console.log(nflGameList);
 }
 
 function addGame(game)
@@ -51,7 +52,7 @@ function addGame(game)
 function updateGame(index, game)
 {
 	//Replace old game object with updated game
-	gameList[index] = createGameObect(game);
+	nflGameList[index] = createGameObect(game);
 }
 
 function createGameObect(game)

@@ -33,10 +33,11 @@ function Match(matchID, fighter0, fighter1, weightClass)
 	this.weightClass = weightClass;
 }
 
-function Event(eventName, date, ...matches)
+function Event(eventName, date, dateString, ...matches)
 {
 	this.eventName = eventName;
 	this.date = date;
+	this.dateString = dateString;
 	this.matchList = matches;
 }
 
