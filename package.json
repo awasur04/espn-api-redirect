@@ -1,0 +1,23 @@
+{
+  "name": "toastybets-data-handler",
+  "version": "1.0.0",
+  "description": "Data handler for toasty bets discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awasur04/toastybets-data-handler.git"
+  },
+  "author": "Adam Rusaw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/awasur04/toastybets-data-handler/issues"
+  },
+  "homepage": "https://github.com/awasur04/toastybets-data-handler#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  }
+}
