@@ -1,4 +1,4 @@
-
-src/config.json
-
 node_modules/
+build/
+.editorconfig
+src/config.json

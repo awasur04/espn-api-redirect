@@ -1,23 +1,34 @@
 {
   "name": "toastybets-data-handler",
   "version": "1.0.0",
-  "description": "Data handler for toasty bets discord bot",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/awasur04/toastybets-data-handler.git"
+    "url": "git+https://github.com/awasur04/espn-api-redirect.git"
   },
-  "author": "Adam Rusaw",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/awasur04/toastybets-data-handler/issues"
+    "url": "https://github.com/awasur04/espn-api-redirect/issues"
   },
-  "homepage": "https://github.com/awasur04/toastybets-data-handler#readme",
+  "homepage": "https://github.com/awasur04/espn-api-redirect#readme",
   "dependencies": {
-    "express": "^4.18.2",
-    "mysql": "^2.18.1"
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.4.2",
+    "typescript": "^5.1.6"
+  },
+
+  "scripts": {
+    "start": "npx tsc && node ./build/data-handler/index.js",
+    "test": "npx tsc && node ./build/test-data/testapi.js",
+    "build": "npx tsc"
   }
 }
