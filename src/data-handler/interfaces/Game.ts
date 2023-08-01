@@ -4,6 +4,7 @@ interface Game
 	homeTeam: Team,
 	awayTeam: Team,
 	time: Date,
-	status: string
+	status: string,
+	week: number
 }
 
