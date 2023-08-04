@@ -1,3 +1,6 @@
-import { getScores } from "./managers/http_manager"
+import { updateGames } from "./managers/http_manager"
 
-getScores();
+let minutesBetweenExecution = 60;
+let convertedInterval = minutesBetweenExecution * 60 * 1000
+
+setInterval(updateGames, convertedInterval);
