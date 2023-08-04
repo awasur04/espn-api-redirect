@@ -3,7 +3,7 @@ import { config } from "../config"
 
 const { processGames } = require('./game_manager');
 
-export function getScores()
+export function updateGames()
 {
 	const options = {
 		method: 'GET',

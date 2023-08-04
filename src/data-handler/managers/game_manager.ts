@@ -1,4 +1,4 @@
-import { mysql, MyCustomResult } from "../database/database";
+import { mysql, GameResult } from "../database/database";
 //List to store current updated games
 let nflGameList: Game[] = [];
 let currentWeek = 0;
@@ -77,9 +77,5 @@ export function processGames(httpDataRequest: any)
 			updateGame(index, game, weekNumber);
 		}
 	}
-
-	let result = mysql.query<MyCustomResult>(mysql.queries.getCurrentWeek, [weekNumber]).then((games) =>
-	{
-		console.log(games?[0]);
-	})
+	console.log("Update games");
 }

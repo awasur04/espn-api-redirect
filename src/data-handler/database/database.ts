@@ -1,7 +1,18 @@
 const mysql2 = require('mysql2/promise');
 import { config } from "../config"
 
-export type MyCustomResult = { games: Game[], rows: string };
+export type GameResult = {
+	game_id: string;
+    home_team_id: number;
+    away_team_id: number;
+    home_score: number;
+    away_score: number;
+    game_status: string;
+    game_time: string;
+    home_odds: number;
+    away_odds: number;
+    week_number: number;
+};
 
 let queries = {
 	testConnection: "SELECT VERSION()",
@@ -25,7 +36,10 @@ let pool = mysql2.createPool(
 );
 
 async function execute<TQueryResult = any>(query: string, params: any[]): Promise<TQueryResult | undefined> {
-	try { return await pool.query(query, params) }
+	try {
+		const [ rows ] = await pool.query(query, params)
+		return rows;
+	}
 	catch(error: any) {
 		console.log(`MYSQL(execute): ${query} : ${params.join(', ')} failed to execute with error: ${error.message}`);
 		return undefined;
@@ -40,7 +54,6 @@ execute("SELECT VERSION()", []).then(() => {
 
 export const mysql = {
 	queries: queries,
-	query: execute,
-
+	query: execute
 };
 
